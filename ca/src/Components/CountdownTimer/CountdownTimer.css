@@ -1,0 +1,29 @@
+.countdown-timer {
+    width: 300px;
+    font-size: 14px;
+    /* border: 2px solid black; */
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    background-color: transparent;
+}
+
+.countdays {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.two-numbers {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+@media (max-width: 500px) {
+    .countdown-timer {
+        font-size: 10px;
+        justify-content: center;
+    }
+}

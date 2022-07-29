@@ -1,0 +1,70 @@
+:root {
+  --main-font: "Helvetica Neue", Helvetica, Arial;
+  --blue: #1d498d;
+  --grey: rgba(0, 36, 91, 0.18);
+  --font-black: #202020;
+  --green: #e7f5e6;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  margin: 0px;
+  min-width: 100%;
+  width: 100%;
+  padding: 0;
+  font-family: "Helvetica Neue !important", Helvetica, Arial;
+  line-height: 28px;
+  overflow-x: hidden;
+  /*display: flex;
+    justify-content: center;*/
+  align-items: center;
+}
+
+.App {
+  max-width: 1440px;
+  margin: auto;
+}
+
+*:focus {
+  outline: 0 !important;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.flexrow {
+  display: flex;
+  flex-direction: row;
+}
+
+.inline {
+  display: inline;
+}
+
+button:focus {
+  outline: none !important;
+}
+
+input,
+textarea:focus {
+  outline: none;
+}
+
+img {
+  image-rendering: pixelated;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
