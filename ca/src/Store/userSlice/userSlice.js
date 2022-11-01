@@ -14,7 +14,7 @@ export const userSlice = createSlice({
 			// which detects changes to a "draft state" and produces a brand new
 			// immutable state based off those changes
 			// console.log('red=', action.payload);
-			// console.log('user', state, action);
+			//console.log('user', state, action.payload);
 			state.user = action.payload;
 			// if (state.messageArray[action.payload.roomId]) {user
 			// 	state.messageArray[action.payload.roomId].push(action.payload);

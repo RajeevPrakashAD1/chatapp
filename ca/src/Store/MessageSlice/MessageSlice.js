@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	messageArray: {
-		india: [ { message: 'Feel Free to chat and make friends' } ]
+		main: [ { senderName: 'Admin', message: 'Feel Free to chat and make friends' } ]
 	}
 };
 
@@ -16,10 +16,10 @@ export const messageSlice = createSlice({
 			// which detects changes to a "draft state" and produces a brand new
 			// immutable state based off those changes
 			// console.log('red=', action.payload);
-			if (state.messageArray[action.payload.roomId]) {
-				state.messageArray[action.payload.roomId].push(action.payload);
+			if (state.messageArray[action.payload.roomName]) {
+				state.messageArray[action.payload.roomName].push(action.payload);
 			} else {
-				state.messageArray[action.payload.roomId] = [ action.payload ];
+				state.messageArray[action.payload.roomName] = [ action.payload ];
 			}
 			// console.log(state);
 			// // state.messageArray = [ ...state.messageArray ];
@@ -29,10 +29,10 @@ export const messageSlice = createSlice({
 		},
 		addMany: (state, action) => {
 			console.log('action = ', action);
-			if (state.messageArray[action.payload.roomId]) {
-				state.messageArray[action.payload.roomId] = action.payload.message;
+			if (state.messageArray[action.payload.roomName]) {
+				state.messageArray[action.payload.roomName] = action.payload.message;
 			} else {
-				state.messageArray[action.payload.roomId] = [ ...action.payload.message ];
+				state.messageArray[action.payload.roomName] = [ ...action.payload.message ];
 			}
 		}
 	}
