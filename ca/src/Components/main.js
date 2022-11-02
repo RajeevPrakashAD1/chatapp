@@ -38,7 +38,7 @@ const Main = () => {
 		const fetchData = async () => {
 			setLoading(true);
 			try {
-				const data = await Submit({ roomName: 'main' }, '/room/message/get', 'get');
+				const data = await Submit({ roomName: 'main' }, '/room/message/get', 'post');
 				//console.log('data = ', data.data.message);
 				// const data =
 

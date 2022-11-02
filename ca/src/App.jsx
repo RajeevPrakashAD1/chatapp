@@ -15,7 +15,8 @@ function App() {
 			<div className="App">
 				<Routes>
 					<Route path="/" element={<LandingPage />} />
-					<Route exact path="/custom/:room" component={Custom} />{' '}
+					<Route path="/custom/:room" element={<Custom />} />
+					<Route path="/custom" element={<Custom />} />
 					<Route exact path="/main" element={<Main />} /> {' '}
 				</Routes>
 			</div>

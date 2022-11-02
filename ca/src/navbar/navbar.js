@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import MyFilter from '../Components/util/filter';
 
 function MyNavbar() {
 	const navigate = useNavigate();
@@ -33,10 +34,10 @@ function MyNavbar() {
 
 							<NavDropdown title="Dropdown" id="basic-nav-dropdown">
 								<NavDropdown.Item href="#action/3.1">Choose Location</NavDropdown.Item>
-								<NavDropdown.Item href="/custom/bihar">Bihar</NavDropdown.Item>
-								<NavDropdown.Item href="/custom/delhi">Delhi</NavDropdown.Item>
+								<MyFilter />
+
 								<NavDropdown.Divider />
-								<NavDropdown.Item href="/custom/?vit">vit</NavDropdown.Item>
+								<NavDropdown.Item href="/custom/vit">vit</NavDropdown.Item>
 							</NavDropdown>
 						</Nav>
 					</Navbar.Collapse>

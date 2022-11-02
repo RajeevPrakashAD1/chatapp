@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import socket from '../socket/socketconnection';
 import { store } from '../Store/Store';
 import { add, addMany } from '../Store/MessageSlice/MessageSlice';
@@ -17,16 +17,20 @@ const Custom = () => {
 	const [ loading, setLoading ] = useState(true);
 
 	const [ message, setMessage ] = useState([]);
+	const { room } = useParams();
 
-	const mess = useSelector((s) => s.message.messageArray);
+	const mess = useSelector((s) => s.message.messageArray[room]);
+	//console.log(mess);
 	const name = localStorage.getItem('name');
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
+	//console.log(room);
+
 	const handleSubmit = () => {
-		socket.emit('sendMessage', { roomName: 'main', message: text, senderName: name });
+		socket.emit('sendMessage', { roomName: room, message: text, senderName: name });
 		setText('');
-		dispatch(add({ roomName: 'india', message: text, senderName: name }));
+		dispatch(add({ roomName: room, message: text, senderName: name }));
 	};
 
 	useEffect(() => {
@@ -34,34 +38,34 @@ const Custom = () => {
 
 		const url = 'http://localhost:8000/room/message/get';
 
-		socket.emit('joinedMain', { roomName: 'main', name: localStorage.getItem('name') });
+		socket.emit('joinedMain', { roomName: room, name: localStorage.getItem('name') });
 		const fetchData = async () => {
 			setLoading(true);
 			try {
-				const data = await Submit({ roomName: 'main' }, '/room/message/get', 'get');
+				const data = await Submit({ roomName: room }, '/room/message/get', 'post');
 				//console.log('data = ', data.data.message);
 				// const data =
 
-				store.dispatch(addMany({ roomName: 'main', message: data.data.message }));
+				store.dispatch(addMany({ roomName: room, message: data.data.message }));
 			} catch (error) {
 				console.error(error.message);
 			}
 			setLoading(false);
 		};
 
-		//fetchData();
-		console.log('aya');
+		fetchData();
 	}, []);
 	return (
 		<React.Fragment>
 			<MyNavbar />{' '}
 			<Wrapper>
+				<h1>{room}</h1>
 				<h3>
 					{' '}
 					Welcome <span class="userInto">{name}</span>{' '}
 				</h3>
-				{mess['main'] &&
-					mess['main'].map(
+				{mess &&
+					mess.map(
 						(m, i) =>
 							m.senderName == 'Admin' ? (
 								<div

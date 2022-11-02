@@ -35,11 +35,11 @@ export const Submit = async (data, gurl, method) => {
 				// NotifyDanger(err.message);
 				// NotifyDanger('plz try again');
 			}
-			return "error";
+			return 'error';
 		}
 	} else if (method == 'get') {
 		try {
-			const response = await axios.get(url, config);
+			const response = await axios.get(data, url, config);
 			console.log(url, ' response = ', response);
 			// NotifySuccess('success ' + response.data.message);
 			// NotifySuccess('success!');

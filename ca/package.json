@@ -25,6 +25,7 @@
         "react-redux": "^7.2.6",
         "react-router-dom": "^6.4.2",
         "react-scripts": "4.0.3",
+        "react-select": "^5.5.9",
         "react-slick": "^0.28.1",
         "socket.io-client": "^4.4.1",
         "styled-components": "^5.3.6",
