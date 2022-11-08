@@ -26,7 +26,7 @@ const Main = () => {
 	const handleSubmit = () => {
 		socket.emit('sendMessage', { roomName: 'main', message: text, senderName: name });
 		setText('');
-		dispatch(add({ roomName: 'india', message: text, senderName: name }));
+		// dispatch(add({ roomName: 'main', message: text, senderName: name }));
 	};
 
 	useEffect(() => {
@@ -39,7 +39,7 @@ const Main = () => {
 			setLoading(true);
 			try {
 				const data = await Submit({ roomName: 'main' }, '/room/message/get', 'post');
-				//console.log('data = ', data.data.message);
+				console.log('data = ', data.data.message);
 				// const data =
 
 				store.dispatch(addMany({ roomName: 'main', message: data.data.message }));

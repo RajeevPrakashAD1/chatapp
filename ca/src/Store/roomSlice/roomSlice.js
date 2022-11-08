@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	stateData: {
-		state: []
+		state: [],
+		district: []
 	}
 };
 
@@ -16,17 +17,20 @@ export const roomSlice = createSlice({
 			// which detects changes to a "draft state" and produces a brand new
 			// immutable state based off those changes
 			// console.log('red=', action.payload);
-			stateData.state = action.payload;
+			stateData.stateData.state = action.payload;
 			// console.log(state);
 			// // state.messageArray = [ ...state.messageArray ];
 			// if(state.messageArray['india']){
 			//     state.messageArray['india'] = state.messageArray['india'].push(action.payload.message)
 			// }
+		},
+		addDistrict: (stateData, action) => {
+			stateData.stateData.district = action.payload;
 		}
 	}
 });
 
 // Action creators are generated for each case reducer function
-export const { addState } = roomSlice.actions;
+export const { addState, addDistrict } = roomSlice.actions;
 
 export default roomSlice.reducer;

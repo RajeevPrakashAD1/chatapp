@@ -11,6 +11,7 @@ import { Submit } from './../configApi/function';
 import MyNavbar from '../navbar/navbar';
 import { pink } from '@material-ui/core/colors';
 import Button from './util/Button';
+import { roomSlice } from '../Store/roomSlice/roomSlice';
 
 const Custom = () => {
 	const [ text, setText ] = useState('');
@@ -30,7 +31,7 @@ const Custom = () => {
 	const handleSubmit = () => {
 		socket.emit('sendMessage', { roomName: room, message: text, senderName: name });
 		setText('');
-		dispatch(add({ roomName: room, message: text, senderName: name }));
+		// dispatch(add({ roomName: room, message: text, senderName: name }));
 	};
 
 	useEffect(() => {
@@ -43,7 +44,7 @@ const Custom = () => {
 			setLoading(true);
 			try {
 				const data = await Submit({ roomName: room }, '/room/message/get', 'post');
-				//console.log('data = ', data.data.message);
+				console.log('data = ', data);
 				// const data =
 
 				store.dispatch(addMany({ roomName: room, message: data.data.message }));

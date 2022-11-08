@@ -32,12 +32,15 @@ function MyNavbar() {
 								</button>
 							</Nav.Link>
 
-							<NavDropdown title="Dropdown" id="basic-nav-dropdown">
-								<NavDropdown.Item href="#action/3.1">Choose Location</NavDropdown.Item>
+							<NavDropdown title="Choose Location" id="basic-nav-dropdown">
 								<MyFilter />
-
+							</NavDropdown>
+						</Nav>
+						<Nav className="navbarclass2">
+							<NavDropdown title="Hotspot Location" id="basic-nav-dropdown">
 								<NavDropdown.Divider />
 								<NavDropdown.Item href="/custom/vit">vit</NavDropdown.Item>
+								<NavDropdown.Item href="/custom/main">India</NavDropdown.Item>
 							</NavDropdown>
 						</Nav>
 					</Navbar.Collapse>
@@ -52,13 +55,16 @@ export default MyNavbar;
 const Pdiv = styled.div`
 	background-color: red;
 	.navbarclass2 {
-		//background-color: red;
+		margin-left: 40px !important;
+		@media (max-width: 998px) {
+			margin-left: 0 !important;
+		}
 	}
 
 	.cnbtn {
 		background-color: transparent;
 		border: none !important;
-		margin: 0 300px;
+		margin: 0 100px;
 		@media (max-width: 998px) {
 			margin: 0;
 		}
