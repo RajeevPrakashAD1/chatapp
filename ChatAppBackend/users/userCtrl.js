@@ -9,6 +9,11 @@ const catchAsync = (fn) => {
 };
 
 exports.addUser = catchAsync(async (req, res) => {
+	const users = await User.find(req.body);
+	if (users.length > 0) {
+		res.status(400).send({ message: 'user already exist' });
+		return;
+	}
 	const user = await User.create(req.body);
 	res.send({ user: user });
 });

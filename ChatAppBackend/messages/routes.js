@@ -7,7 +7,7 @@ const messageController = require('./messageCtrl');
 // token routes
 
 router.route('/room/message/post').post(messageController.createMessage);
-router.route('/room/message/get').get(messageController.getMessage);
+router.route('/room/message/get').post(messageController.getMessage);
 
 router.route('/').get(messageController.home);
 

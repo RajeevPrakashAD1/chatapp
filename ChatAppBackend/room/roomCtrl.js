@@ -2,6 +2,9 @@ const { response } = require('express');
 const mongoose = require('mongoose');
 
 const Room = require('./roomSchema.js');
+const stateData = require('./state');
+//console.log(stateData());
+const data = stateData().states;
 
 const catchAsync = (fn) => {
 	return (req, res, next) => {
@@ -20,15 +23,27 @@ exports.createRoom = catchAsync(async (req, res, next) => {
 });
 
 exports.getRoom = catchAsync(async (req, res, next) => {
-	const rooms = await Room.find();
-	res.send({
-		status: 'sucess',
-		length: rooms.length,
-		data: {
-			rooms
+	const type = req.body.type;
+	console.log(type);
+	var dts = [];
+	if (type == 'state') {
+		for (let i of data) {
+			dts.push(i.state);
+			//console.log(i.state);
 		}
-	});
-	res.status(200);
+	} else {
+		const state = req.body.state;
+		//console.log(state.toLowerCase());
+		//var dts = [];
+		for (let i of data) {
+			if (i.state.toLowerCase() == state.toLowerCase()) {
+				dts = i.districts;
+			}
+			//console.log(i.state);
+		}
+	}
+
+	res.status(200).send({ data: dts });
 });
 
 // exports.getScheduledRoom = catchAsync(async (req, res, next) => {

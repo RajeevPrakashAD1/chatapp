@@ -7,9 +7,10 @@ const RoomRoute = require('./room/routes');
 // const RoomInfoRoute = require('./room_info/routes');
 const userRoute = require('./users/routes');
 const messageRoute = require('./messages/routes');
+//const roomRoute = require('./room/routes');
 
-const PORT = process.env.PORT || 8080;
-const PORT2 = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000;
+//const PORT2 = process.env.PORT || 6000;
 var cors = require('cors');
 
 const app = express();
@@ -27,10 +28,14 @@ app.use(
 
 app.use(express.static('public'));
 
-const connectString = 'mongodb+srv://rajeev:qwerasdf@cluster0.syoov.mongodb.net/ChatRoom?retryWrites=true&w=majority';
+// const connectString = 'mongodb+srv://rajeev:qwerasdf@cluster0.syoov.mongodb.net/ChatRoom?retryWrites=true&w=majority';
+
+// const connectString2 =
+// 	'mongodb+srv://youtube:e17pk2110064@cluster0.hslb9.mongodb.net/eventDB?retryWrites=true&w=majority';
+const connectString3 = 'mongodb+srv://chatapp:mnbvlkjh@cluster0.kkk1c2e.mongodb.net/chat?retryWrites=true&w=majority';
 
 mongoose
-	.connect(connectString, {
+	.connect(connectString3, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
 	})
@@ -76,5 +81,5 @@ app.use((err, req, res, next) => {
 // });
 
 app.listen(PORT, () => {
-	console.log('listening on port = ', PORT);
+	console.log('server listening on port = ', PORT);
 });

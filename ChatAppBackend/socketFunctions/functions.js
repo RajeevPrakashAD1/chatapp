@@ -1,11 +1,14 @@
 //const { io } = require('../server.js');
 const axios = require('axios');
+const Message = require('../messages/messageSchema');
 
-async function message(obj) {
-	const url = 'http://localhost:8080/room/message/post';
-	console.log('server rec message = ', obj);
-	const response = await axios.post(url, obj);
-	// console.log('uploading message response = ', response);
+async function Uploadmessage(obj) {
+	try {
+		const newMessage = await Message.create(obj);
+		//console.log('succesffully uploaded');
+	} catch (e) {
+		console.log(e.message);
+	}
 }
 
 async function addUser(name, id) {
@@ -14,5 +17,6 @@ async function addUser(name, id) {
 	const response = await axios.post(url, { userName: name, socket_id: id });
 	// console.log('uploading message response = ', response);
 }
+//const axios = require('axios');
 
-module.exports = { message, addUser };
+module.exports = { Uploadmessage, addUser };

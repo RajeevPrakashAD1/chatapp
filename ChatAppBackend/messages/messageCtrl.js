@@ -18,7 +18,7 @@ exports.createMessage = catchAsync(async (req, res, next) => {
 	res.status(200);
 });
 exports.getMessage = catchAsync(async (req, res, next) => {
-	const newMessage = await Message.find({ ...req.query });
+	const newMessage = await Message.find({ ...req.query, ...req.body });
 	res.send({ message: newMessage });
 	res.status(200);
 });
