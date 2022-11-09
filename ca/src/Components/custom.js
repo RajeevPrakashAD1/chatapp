@@ -18,7 +18,13 @@ const Custom = () => {
 	const [ loading, setLoading ] = useState(true);
 
 	const [ message, setMessage ] = useState([]);
-	const { room } = useParams();
+	const [ room, setRoom ] = useState(useParams().room);
+	const room2 = useParams().room;
+
+	console.log('room2', useParams().room);
+	if (room != room2) {
+		setRoom(room2);
+	}
 
 	const mess = useSelector((s) => s.message.messageArray[room]);
 	//console.log(mess);
@@ -34,28 +40,34 @@ const Custom = () => {
 		// dispatch(add({ roomName: room, message: text, senderName: name }));
 	};
 
-	useEffect(() => {
-		if (localStorage.getItem('name') == null) navigate('/');
+	useEffect(
+		() => {
+			//window.location.reload();
+			if (localStorage.getItem('name') == null) navigate('/');
 
-		const url = 'http://localhost:8000/room/message/get';
+			const url = 'http://localhost:8000/room/message/get';
 
-		socket.emit('joinedMain', { roomName: room, name: localStorage.getItem('name') });
-		const fetchData = async () => {
-			setLoading(true);
-			try {
-				const data = await Submit({ roomName: room }, '/room/message/get', 'post');
-				console.log('data = ', data);
-				// const data =
+			socket.emit('joinedMain', { roomName: room, name: localStorage.getItem('name') });
+			const fetchData = async () => {
+				setLoading(true);
+				try {
+					const data = await Submit({ roomName: room }, '/room/message/get', 'post');
+					//console.log('data = ', data);
+					// const data =
 
-				store.dispatch(addMany({ roomName: room, message: data.data.message }));
-			} catch (error) {
-				console.error(error.message);
-			}
-			setLoading(false);
-		};
+					store.dispatch(addMany({ roomName: room, message: data.data.message }));
+				} catch (error) {
+					console.error(error.message);
+				}
+				setLoading(false);
+			};
 
-		fetchData();
-	}, []);
+			fetchData();
+			setRoom(room);
+			console.log('useffect called');
+		},
+		[ room ]
+	);
 	return (
 		<React.Fragment>
 			<MyNavbar />{' '}

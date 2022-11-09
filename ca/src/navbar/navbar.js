@@ -40,7 +40,7 @@ function MyNavbar() {
 							<NavDropdown title="Hotspot Location" id="basic-nav-dropdown">
 								<NavDropdown.Divider />
 								<NavDropdown.Item href="/custom/vit">vit</NavDropdown.Item>
-								<NavDropdown.Item href="/custom/main">India</NavDropdown.Item>
+								<NavDropdown.Item href="/main">India</NavDropdown.Item>
 							</NavDropdown>
 						</Nav>
 					</Navbar.Collapse>
