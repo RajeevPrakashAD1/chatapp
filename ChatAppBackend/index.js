@@ -4,9 +4,11 @@ const ejs = require('ejs');
 const mongoose = require('mongoose');
 const server = require('./server');
 const RoomRoute = require('./room/routes');
+
 // const RoomInfoRoute = require('./room_info/routes');
 const userRoute = require('./users/routes');
 const messageRoute = require('./messages/routes');
+const dmsRoute = require('./dms/routes');
 //const roomRoute = require('./room/routes');
 
 const PORT = process.env.PORT || 8000;
@@ -48,6 +50,7 @@ mongoose
 app.use(RoomRoute);
 app.use(userRoute);
 app.use(messageRoute);
+app.use(dmsRoute);
 
 app.all('*', (req, res, next) => {
 	console.log('req', req.originalUrl);

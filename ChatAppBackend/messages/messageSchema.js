@@ -8,7 +8,7 @@ const MessageSchema = new mongoose.Schema({
 	senderId: String,
 	senderName: String,
 	message: String,
-	Date: Date
+	MDate: Date
 });
 
 const Message = mongoose.model('Message', MessageSchema);

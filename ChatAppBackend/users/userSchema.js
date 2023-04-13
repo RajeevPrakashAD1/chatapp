@@ -5,8 +5,7 @@ const UserSchema = new mongoose.Schema({
 
 	profile_pic: String,
 	role: String,
-	socket_id: String,
-	roomId: String
+	socket_id: String
 });
 
 const User = mongoose.model('User', UserSchema);
