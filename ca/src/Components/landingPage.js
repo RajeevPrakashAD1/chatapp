@@ -9,6 +9,7 @@ import Button from './util/Button';
 const LandingPage = () => {
 	const navigate = useNavigate();
 	const { state } = useLocation();
+
 	const [ name, setName ] = useState('');
 	const dispatch = useDispatch();
 	const handleClick = async (event) => {
@@ -16,6 +17,12 @@ const LandingPage = () => {
 		//console.log('clicked', name);
 
 		//dispatch(addUser({ name: name }));
+		if (state && name == state.pv) {
+			navigate('/custom/india');
+			localStorage.setItem('name', name);
+			return;
+		}
+
 		const res = await Submit({ name: name }, '/user/add', 'post');
 		//console.log(res);
 		if (res == 'error') {
@@ -28,14 +35,14 @@ const LandingPage = () => {
 			const res = await Submit({ name: pn }, '/user/remove', 'post');
 			localStorage.setItem('name', name);
 			//console.log('delete', res);
-			navigate('/main');
+			navigate('/');
 		}
 	};
 	useEffect(() => {
 		//console.log(localStorage.getItem('name') != null);
 		if (localStorage.getItem('name') != null) {
 			//dispatch(addUser({ name: localStorage.getItem('name') }));
-			navigate('/main');
+			navigate('/custom/india');
 		}
 	});
 	return (

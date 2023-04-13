@@ -29,12 +29,7 @@ export const Submit = async (data, gurl, method) => {
 			return response;
 		} catch (err) {
 			//console.log('error..................', err);
-			if (err.response.status === 409) {
-				//NotifyDanger('conflict user already registered');
-			} else {
-				// NotifyDanger(err.message);
-				// NotifyDanger('plz try again');
-			}
+
 			return 'error';
 		}
 	} else if (method == 'get') {

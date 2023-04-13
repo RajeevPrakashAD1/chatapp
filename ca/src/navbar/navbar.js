@@ -5,6 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MyFilter from '../Components/util/filter';
+import MyInbox from '../Components/util/inbox';
 
 function MyNavbar() {
 	const navigate = useNavigate();
@@ -19,19 +20,23 @@ function MyNavbar() {
 
 	return (
 		<Pdiv>
-			<Navbar bg="light" expand="lg">
+			<Navbar bg="" expand="lg">
 				<Container>
-					<Navbar.Brand href="">Chat App</Navbar.Brand>
+					<Nav.Link href="/custom/india">
+						<div class="brand">Chat App</div>
+					</Nav.Link>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="navbarclass2 me-auto">
 							<Nav.Link href="">
-								<button class="cnbtn" onClick={handleErase}>
+								<div class="cnbtn" onClick={handleErase}>
 									{' '}
 									Change Name
-								</button>
+								</div>
 							</Nav.Link>
+						</Nav>
 
+						<Nav className="navbarclass2">
 							<NavDropdown title="Choose Location" id="basic-nav-dropdown">
 								<MyFilter />
 							</NavDropdown>
@@ -40,9 +45,32 @@ function MyNavbar() {
 							<NavDropdown title="Hotspot Location" id="basic-nav-dropdown">
 								<NavDropdown.Divider />
 								<NavDropdown.Item href="/custom/vit">vit</NavDropdown.Item>
-								<NavDropdown.Item href="/main">India</NavDropdown.Item>
+								<NavDropdown.Item href="/custom/india">India</NavDropdown.Item>
 							</NavDropdown>
 						</Nav>
+						<Nav className="navbarclass2 me-auto">
+							<NavDropdown title="Inbox" id="basic-nav-dropdown">
+								<MyInbox />
+							</NavDropdown>
+						</Nav>
+
+						{/* <Nav className="navbarclass2 me-auto">
+							<Nav.Link href="">
+								<button
+									class="rbtn"
+									onClick={() => {
+										window.location.reload();
+									}}
+								>
+									Refresh
+								</button>
+							</Nav.Link>
+						</Nav>
+						<Nav className="navbarclass2 me-auto">
+							<Nav.Link href="/chatbot">
+								<button class="rbtn">chatbot</button>
+							</Nav.Link>
+						</Nav> */}
 					</Navbar.Collapse>
 				</Container>
 			</Navbar>
@@ -53,7 +81,16 @@ function MyNavbar() {
 export default MyNavbar;
 
 const Pdiv = styled.div`
-	background-color: red;
+	position: fixed;
+	background-color: white;
+	top: 0;
+	padding: 10px;
+	${'' /* background-color: red; */} width: 100%;
+	font-size: 15px;
+	margin-bottom: 50px;
+	.container {
+		background-color: white !important;
+	}
 	.navbarclass2 {
 		margin-left: 40px !important;
 		@media (max-width: 998px) {
@@ -61,10 +98,26 @@ const Pdiv = styled.div`
 		}
 	}
 
+	.brand {
+		font-size: 40px;
+	}
 	.cnbtn {
 		background-color: transparent;
 		border: none !important;
-		margin: 0 100px;
+		margin: 0 50px;
+
+		@media (max-width: 998px) {
+			margin: 0;
+		}
+	}
+
+	.rbtn {
+		background-color: transparent;
+		border: none;
+
+		padding: 10px;
+		color: blue;
+
 		@media (max-width: 998px) {
 			margin: 0;
 		}

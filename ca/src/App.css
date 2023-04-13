@@ -1,5 +1,10 @@
 /*section 11 */
 
+.nbtn {
+    background: transparent;
+    border: none;
+}
+
 .section11 {
     position: relative;
     background-color: rgba(231, 245, 230, 1);

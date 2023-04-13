@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import socket from '../socket/socketconnection';
 import { store } from '../Store/Store';
 import { add, addMany } from '../Store/MessageSlice/MessageSlice';
@@ -13,7 +13,7 @@ import { pink } from '@material-ui/core/colors';
 import Button from './util/Button';
 import { roomSlice } from '../Store/roomSlice/roomSlice';
 
-const Custom = () => {
+const Personal = () => {
 	const myRef = useRef(null);
 	const inputRef = useRef(null);
 	const [ text, setText ] = useState('');
@@ -21,9 +21,8 @@ const Custom = () => {
 
 	const [ message, setMessage ] = useState([]);
 	const [ room, setRoom ] = useState(useParams().room);
-	const [ vis, setvis ] = useState(0);
 	const room2 = useParams().room;
-	//console.log('usepara,', useParams());
+
 	//console.log('room2', useParams().room);
 	if (room != room2) {
 		setRoom(room2);
@@ -34,13 +33,19 @@ const Custom = () => {
 	const name = localStorage.getItem('name');
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { state } = useLocation();
 
 	//console.log(room);
 
 	const handleSubmit = () => {
-		//console.log(room, text, name);
-		socket.emit('sendMessage', { roomName: room, message: text, senderName: name });
-
+		//console.log(state.receiver, 'receiver');
+		socket.emit('sendMessageOne', {
+			roomName: room,
+			message: text,
+			senderName: name,
+			receiverName: state.receiver,
+			socketId: socket.id
+		});
 		setText('');
 		// dispatch(add({ roomName: room, message: text, senderName: name }));
 	};
@@ -50,8 +55,8 @@ const Custom = () => {
 		if (name == cname) return;
 		var required_name = cname > name ? cname + name : name + cname;
 		navigate('/personal/' + required_name, { state: { receiver: cname } });
-		//navigate('/', { state: { pv: previous_name } })   ;
 	};
+
 	const handleKeyDown = (event) => {
 		if (event.key === 'Enter') {
 			//event.preventDefault(); // Prevent default form submission behavior
@@ -59,36 +64,6 @@ const Custom = () => {
 			handleSubmit(); // Simulate button click
 		}
 	};
-
-	useEffect(() => {
-		window.scrollTo(0, document.body.scrollHeight);
-		setvis(vis + 1);
-		console.log(vis);
-	}, []);
-	useEffect(() => {
-		const handleResize = () => {
-			window.scrollTo(0, document.body.scrollHeight);
-		};
-		window.addEventListener('resize', handleResize);
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, []);
-
-	useEffect(() => {
-		const handleLoad = () => {
-			window.scrollTo(0, document.body.scrollHeight);
-		};
-		window.addEventListener('load', handleLoad);
-		return () => {
-			window.removeEventListener('load', handleLoad);
-		};
-	}, []);
-	useEffect(() => {
-		myRef.current.scrollIntoView({ behavior: 'smooth' });
-		//window.location.reload();
-	}, []);
-
 	useEffect(
 		() => {
 			//window.location.reload();
@@ -96,14 +71,13 @@ const Custom = () => {
 
 			const url = 'http://localhost:8000/room/message/get';
 
-			socket.emit('user', { name: name });
-
 			socket.emit('joinedMain', { roomName: room, name: localStorage.getItem('name') });
-
 			const fetchData = async () => {
 				setLoading(true);
 				try {
 					const data = await Submit({ roomName: room }, '/room/message/get', 'post');
+					//console.log('data = ', data);
+					// const data =
 
 					store.dispatch(addMany({ roomName: room, message: data.data.message }));
 				} catch (error) {
@@ -114,14 +88,7 @@ const Custom = () => {
 
 			fetchData();
 			setRoom(room);
-			const scrollHandler = () => {
-				window.scrollTo(0, document.body.scrollHeight);
-			};
-			myRef.current.scrollIntoView({ behavior: 'smooth' });
-			window.addEventListener('load', scrollHandler);
-			//window.scrollTo(0, document.body.scrollHeight);
-			console.log('useffect called');
-			return () => window.removeEventListener('load', scrollHandler);
+			//console.log('useffect called');
 		},
 		[ room ]
 	);
@@ -129,32 +96,30 @@ const Custom = () => {
 		<React.Fragment>
 			<MyNavbar />{' '}
 			<Wrapper>
-				<h1>{room}</h1>
-				<h3>
+				<h6>
 					{' '}
-					Welcome <span class="userInto">{name}</span>{' '}
-				</h3>
+					<span class="userInto">
+						{name} -> {state.receiver}
+					</span>{' '}
+				</h6>
 				{mess &&
 					mess.map(
 						(m, i) =>
 							m.senderName == 'Admin' ? (
-								<div>
-									<div
-										key={i}
-										style={{
-											background: 'pink',
-											display: 'inline-block',
-											paddingRight: '30px',
-											paddingLeft: '10px',
-											margin: '10px'
-										}}
-									>
-										<span style={{ color: 'red', background: 'pink' }}>
-											{m.senderName ? m.senderName : '  no name ....  '}
-										</span>
+								<div
+									key={i}
+									style={{
+										background: 'pink',
+										display: 'inline-block',
+										paddingRight: '30px',
+										paddingLeft: '10px'
+									}}
+								>
+									<span style={{ color: 'red', background: 'pink' }}>
+										{m.senderName ? m.senderName : '  no name ....  '}
+									</span>
 
-										{'  ' + m.message}
-									</div>
+									{'  ' + m.message}
 								</div>
 							) : (
 								<p key={i}>
@@ -177,19 +142,18 @@ const Custom = () => {
 				/>
 
 				<Button onClick={handleSubmit}>send</Button>
-				<div ref={myRef} />
 			</Wrapper>
 		</React.Fragment>
 	);
 };
 
-export default Custom;
+export default Personal;
 
 const Wrapper = styled.div`
-	margin-top: 50px;
+	margin-top: 70px;
 	padding: 20px;
 	.userInto {
-		font-size: 40px;
+		font-size: 30px;
 		color: brown;
 	}
 	.mbtn {
