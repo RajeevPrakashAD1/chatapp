@@ -36,8 +36,11 @@ app.use(express.static('public'));
 // 	'mongodb+srv://youtube:e17pk2110064@cluster0.hslb9.mongodb.net/eventDB?retryWrites=true&w=majority';
 const connectString3 = 'mongodb+srv://chatapp:mnbvlkjh@cluster0.kkk1c2e.mongodb.net/chat?retryWrites=true&w=majority';
 
+const connectString4 =
+	'mongodb://chatapp:mnbvlkjh@ac-2jmfs3u-shard-00-00.kkk1c2e.mongodb.net:27017,ac-2jmfs3u-shard-00-01.kkk1c2e.mongodb.net:27017,ac-2jmfs3u-shard-00-02.kkk1c2e.mongodb.net:27017/chat?ssl=true&replicaSet=atlas-1qq9mt-shard-0&authSource=admin&retryWrites=true&w=majority';
+
 mongoose
-	.connect(connectString3, {
+	.connect(connectString4, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
 	})

@@ -18,7 +18,7 @@ exports.createDms = catchAsync(async (req, res, next) => {
 	res.status(200);
 });
 exports.getDms = catchAsync(async (req, res, next) => {
-	const newDms = await Dms.find({ recieverName: req.body.receiver }).sort({ MDate: -1 });
+	const newDms = await Dms.find({ recieverName: req.body.receiver }).sort({ MDate: -1 }).limit(50);
 	res.send({ dms: newDms });
 	res.status(200);
 });
