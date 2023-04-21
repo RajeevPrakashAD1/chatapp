@@ -11,8 +11,8 @@ import useCurrentParam from '../Components/util/hookUser';
 
 //internal
 
-//const ip = '43.205.187.250';
-const ip = 'localhost';
+const ip = '43.205.187.250';
+//const ip = 'localhost';
 const cs = 'http://' + ip + ':8081';
 console.log(cs);
 const socket = io(cs);
