@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
 	// addUser()
 
 	socket.on('user', ({ name: name }) => {
-		console.log('user inside');
+		//console.log('user inside');
 		addUserInside(socket.id, name);
 	});
 	socket.on('joinedMain', ({ roomName, name }) => {

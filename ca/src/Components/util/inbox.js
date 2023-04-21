@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { addDms } from '../../Store/dmsSlice/dmsSlice';
 
-const MyInbox = () => {
+const MyInbox = (props) => {
 	const [ loading, setLoading ] = useState(true);
 
 	const district = useSelector((s) => s.room.stateData.district);
@@ -40,6 +40,7 @@ const MyInbox = () => {
 		console.log('clicked', cname);
 		if (name == cname) return;
 		var required_name = cname > name ? cname + name : name + cname;
+		props.handleButtonClick2();
 		navigate('/personal/' + required_name, { state: { receiver: cname } });
 		//navigate('/', { state: { pv: previous_name } });
 	};
@@ -80,7 +81,7 @@ export default MyInbox;
 const Mdiv = styled.div`
 	width: 300px;
 	padding: 10px;
-	${'' /* margin-top: 30px; */} background-color: red;
+	${'' /* margin-top: 30px; */} background-color:white;
 	.optionSelect {
 		font-size: 22px;
 	}

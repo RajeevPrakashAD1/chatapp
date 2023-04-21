@@ -8,10 +8,13 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 
-const MyFilter = () => {
+const MyFilter = (props) => {
 	// const [ state, setState ] = useState([]);
 	const [ loading, setLoading ] = useState(true);
 	const state = useSelector((s) => s.room.stateData.state);
+	//const [ vis, setv ] = useState(true);
+
+	const [ visible_dis, svd ] = useState(false);
 	const district = useSelector((s) => s.room.stateData.district);
 	//const [ selectedOption, setSelectedOption ] = useState(null);
 	//console.log('selected option', selectedOption);
@@ -49,6 +52,8 @@ const MyFilter = () => {
 		}
 	};
 	const handleClick = () => {
+		props.handleButtonClick();
+
 		navigate('/custom/' + selectValue);
 	};
 	useEffect(
@@ -86,18 +91,25 @@ const MyFilter = () => {
 						</option>
 					))}
 				</select>
-				Choose District
-				<select onChange={onChange2} className="form-select optionSelect">
-					{district.map((s) => (
-						<option className="optionSelect" value={s}>
-							{s}
-						</option>
-					))}
-				</select>
-				{<p>{'choosed location  ' + selectValue}</p>}
+				<div class="cbc">
+					<span class="cbc-text">Choose District </span>
+					<span class="cbc-checkbox">
+						<input type="checkbox" name="cd" class="disin" onChange={(e) => svd(e.target.checked)} />
+					</span>
+				</div>
+				{visible_dis && (
+					<select onChange={onChange2} className="form-select optionSelect">
+						{district.map((s) => (
+							<option className="optionSelect" value={s}>
+								{s}
+							</option>
+						))}
+					</select>
+				)}
+				{<p className="glitter">{'choosed location:  ' + selectValue} </p>}
 				{/* Choose District */}
 				{/* <Select options={options} /> */}
-				<Button onClick={handleClick}>Go there </Button>
+				<Button onClick={handleClick}> Go there </Button>
 			</Mdiv>
 		</React.Fragment>
 	);
@@ -110,5 +122,29 @@ const Mdiv = styled.div`
 	${'' /* background-color: red; */};
 	.optionSelect {
 		font-size: 22px;
+	}
+
+	.disin {
+		height: 20px;
+		background-color: red;
+		margin-top: 20px;
+		display: inline;
+	}
+
+	.cbc {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.cbc-text {
+		flex: 1;
+	}
+
+	.cbc-checkbox {
+		margin-left: 10px;
+	}
+	.glitter {
+		color: red;
 	}
 `;

@@ -12,8 +12,10 @@ import MyNavbar from '../navbar/navbar';
 import { pink } from '@material-ui/core/colors';
 import Button from './util/Button';
 import { roomSlice } from '../Store/roomSlice/roomSlice';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 const Custom = () => {
+	//console.log('Custom');
 	const myRef = useRef(null);
 	const inputRef = useRef(null);
 	const [ text, setText ] = useState('');
@@ -59,35 +61,15 @@ const Custom = () => {
 			handleSubmit(); // Simulate button click
 		}
 	};
+	const scrollRef = useRef(null);
 
-	useEffect(() => {
-		window.scrollTo(0, document.body.scrollHeight);
-		setvis(vis + 1);
-		console.log(vis);
-	}, []);
-	useEffect(() => {
-		const handleResize = () => {
-			window.scrollTo(0, document.body.scrollHeight);
-		};
-		window.addEventListener('resize', handleResize);
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, []);
-
-	useEffect(() => {
-		const handleLoad = () => {
-			window.scrollTo(0, document.body.scrollHeight);
-		};
-		window.addEventListener('load', handleLoad);
-		return () => {
-			window.removeEventListener('load', handleLoad);
-		};
-	}, []);
-	useEffect(() => {
-		myRef.current.scrollIntoView({ behavior: 'smooth' });
-		//window.location.reload();
-	}, []);
+	const scrollToBottom = () => {
+		console.log('called');
+		window.scrollTo({
+			top: document.documentElement.scrollHeight,
+			behavior: 'smooth'
+		});
+	};
 
 	useEffect(
 		() => {
@@ -104,7 +86,7 @@ const Custom = () => {
 				setLoading(true);
 				try {
 					const data = await Submit({ roomName: room }, '/room/message/get', 'post');
-
+					console.log('data', data);
 					store.dispatch(addMany({ roomName: room, message: data.data.message }));
 				} catch (error) {
 					console.error(error.message);
@@ -114,14 +96,6 @@ const Custom = () => {
 
 			fetchData();
 			setRoom(room);
-			const scrollHandler = () => {
-				window.scrollTo(0, document.body.scrollHeight);
-			};
-			myRef.current.scrollIntoView({ behavior: 'smooth' });
-			window.addEventListener('load', scrollHandler);
-			//window.scrollTo(0, document.body.scrollHeight);
-			console.log('useffect called');
-			return () => window.removeEventListener('load', scrollHandler);
 		},
 		[ room ]
 	);
@@ -129,6 +103,10 @@ const Custom = () => {
 		<React.Fragment>
 			<MyNavbar />{' '}
 			<Wrapper>
+				<ArrowWrapper>
+					<ArrowDownwardIcon onClick={scrollToBottom} />
+					<div ref={scrollRef} />
+				</ArrowWrapper>
 				<h1>{room}</h1>
 				<h3>
 					{' '}
@@ -195,5 +173,17 @@ const Wrapper = styled.div`
 	.mbtn {
 		background-color: transparent;
 		border: none;
+	}
+`;
+
+const ArrowWrapper = styled.div`
+	position: fixed;
+	top: 120px;
+	right: 20px;
+	cursor: pointer;
+
+	svg {
+		font-size: 40px;
+		color: gray;
 	}
 `;

@@ -4,6 +4,7 @@ const ejs = require('ejs');
 const mongoose = require('mongoose');
 const server = require('./server');
 const RoomRoute = require('./room/routes');
+const CustomRoomRoute = require('./customroom/routes');
 
 // const RoomInfoRoute = require('./room_info/routes');
 const userRoute = require('./users/routes');
@@ -54,6 +55,7 @@ app.use(RoomRoute);
 app.use(userRoute);
 app.use(messageRoute);
 app.use(dmsRoute);
+app.use(CustomRoomRoute);
 
 app.all('*', (req, res, next) => {
 	console.log('req', req.originalUrl);
